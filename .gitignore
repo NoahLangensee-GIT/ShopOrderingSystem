@@ -1,0 +1,54 @@
+## Visual Studio Build-Artefakte
+[Bb]in/
+[Oo]bj/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+build/
+Release/
+Debug/
+
+## Visual Studio temporäre Dateien und Cache
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.suo.tmp
+
+## Rider / JetBrains IDEs
+.idea/
+*.sln.iml
+
+## Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+## NuGet-Pakete
+*.nupkg
+# Lokaler NuGet-Cache (oft nicht benötigt im Repo)
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+## Test-Ergebnisse
+[Tt]est[Rr]esult*/
+BenchmarkDotNet.Artifacts/
+
+## Lokale Konfigurationsdateien & Secrets
+# Schützt davor, lokale Secrets aus Versehen zu committen
+# (appsettings.json sollte im Repo bleiben, appsettings.Development.json oft auch)
+# Hier kannst du eigene lokale Überschreibungen eintragen:
+appsettings.Local.json
+*.user.config
+
+## Betriebssystem-spezifische Dateien
+.DS_Store
+Thumbs.db
+
+## Veröffentlichte Outputs (Publish)
+publish/
