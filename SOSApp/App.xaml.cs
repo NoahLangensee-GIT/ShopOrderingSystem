@@ -1,10 +1,9 @@
 ﻿using System.Windows;
 using Autofac;
-using Business.Business;
-using TODOApp.UI;
-using TODOApp.UI.Views;
+using SOSApp.Business;
+using SOSApp.Views;
 
-namespace TODO_App;
+namespace SOSApp;
 
 /// <summary>
 /// Interaction logic for App.xaml

@@ -1,11 +1,11 @@
-﻿<Window x:Class="TODOApp.UI.Views.MainWindow"
+﻿<Window x:Class="SOSApp.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:TODOApp.UI.ViewModels"
+        xmlns:viewModels1="clr-namespace:SOSApp.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
+        d:DataContext="{d:DesignInstance viewModels1:MainWindowViewModel}"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="910" Width="1300">
     <Grid>

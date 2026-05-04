@@ -1,7 +1,7 @@
-﻿using Contract.Contract;
-using NHibernate;
+﻿using NHibernate;
+using SOSApp.Contract;
 
-namespace Business.Business;
+namespace SOSApp.Business;
 
 internal class HandleSessionDataBase : IHandleSessionDataBase
 {

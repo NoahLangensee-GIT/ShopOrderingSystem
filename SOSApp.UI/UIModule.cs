@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using TODOApp.UI.ViewModels;
-using TODOApp.UI.Views;
+using SOSApp.ViewModels;
+using SOSApp.Views;
 
-namespace TODOApp.UI;
+namespace SOSApp;
 
 // ReSharper disable once InconsistentNaming
 public class UIModule : Module

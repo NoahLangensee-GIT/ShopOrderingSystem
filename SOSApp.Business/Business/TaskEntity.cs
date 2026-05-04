@@ -1,4 +1,4 @@
-﻿namespace Business.Business;
+﻿namespace SOSApp.Business;
 
 internal class TaskEntity
 {

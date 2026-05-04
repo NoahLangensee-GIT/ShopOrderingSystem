@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using Contract.Contract;
+using SOSApp.Contract;
 
-namespace Business.Business;
+namespace SOSApp.Business;
 
 public class BusinessModule : Module
 {

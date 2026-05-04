@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace TODOApp.UI;
+namespace SOSApp;
 
 public class RelayCommand : ICommand
 {

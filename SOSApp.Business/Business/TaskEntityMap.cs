@@ -1,6 +1,6 @@
 ﻿using FluentNHibernate.Mapping;
 
-namespace Business.Business;
+namespace SOSApp.Business;
 
 internal class TaskEntityMap : ClassMap<TaskEntity>
 {

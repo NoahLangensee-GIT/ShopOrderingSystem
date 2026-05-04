@@ -1,8 +1,7 @@
 ﻿using System.Windows;
-using Contract.Contract;
-using TODOApp.UI.ViewModels;
+using SOSApp.ViewModels;
 
-namespace TODOApp.UI.Views;
+namespace SOSApp.Views;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -13,7 +12,6 @@ public partial class MainWindow : Window
     public MainWindow(MainWindowViewModel viewModel)
     {
         InitializeComponent();
-        
         DataContext = viewModel;
     }
 }

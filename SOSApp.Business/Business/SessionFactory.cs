@@ -2,7 +2,7 @@
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 
-namespace Business.Business;
+namespace SOSApp.Business;
 
 internal class SessionFactory
 {

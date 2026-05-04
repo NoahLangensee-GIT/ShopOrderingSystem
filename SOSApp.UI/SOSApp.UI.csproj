@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>TODOApp.UI</RootNamespace>
+        <RootNamespace>SOSApp</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

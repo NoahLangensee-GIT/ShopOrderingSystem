@@ -1,4 +1,4 @@
-﻿namespace Contract.Contract;
+﻿namespace SOSApp.Contract;
 
 public class SaveTaskDto
 {

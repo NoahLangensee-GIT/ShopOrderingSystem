@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Contract.Contract;
+using SOSApp.Contract;
 
-namespace TODOApp.UI.ViewModels;
+namespace SOSApp.ViewModels;
 
 public class MainWindowViewModel : INotifyPropertyChanged
 {
