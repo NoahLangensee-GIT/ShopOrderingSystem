@@ -257,13 +257,12 @@ public class MainWindowViewModel : INotifyPropertyChanged
             MessageBox.Show("Please enter a title");
         }
 
-        Console.WriteLine(CreateDateInput == null);
-        if (CreateDateInput < DateTime.Now)
+        else if (CreateDateInput < DateTime.Today)
         {
             MessageBox.Show("Please enter a valid date");
         }
 
-        if (CreateDateInput > DateTime.Now && CreateTitleInput.Length > 0)
+        else
         {
             HandleSession.SaveObject(new SaveTaskDto()
             {

@@ -15,6 +15,7 @@ internal class SessionFactory
             .Mappings(configuration => configuration.FluentMappings
                 .AddFromAssemblyOf<TaskEntity>()
                 )
+            .ExposeConfiguration(cfg => cfg.SetProperty(NHibernate.Cfg.Environment.Hbm2ddlAuto, "update"))
             .BuildSessionFactory();
     
         return sessionFactory.OpenSession();
