@@ -33,12 +33,12 @@ Bevor du die Anwendung starten kannst, benötigst du folgende Software:
 Starte den MySQL-Container mit den folgenden Einstellungen:
 
 ```powershell
-docker run --name mysql-todo -e MYSQL_ROOT_PASSWORD=Test -e MYSQL_DATABASE=todo -p 3307:3306 -d mysql:8.0
+docker run --name mysql-sos -e MYSQL_ROOT_PASSWORD=Test -e MYSQL_DATABASE=sos -p 3307:3306 -d mysql:8.0
 ```
 
 **Oder starten Sie einen bestehenden Container neu:**
 ```powershell
-docker start mysql-todo
+docker start mysql-sos
 ```
 
 ### Schritt 2: Anwendung starten
@@ -47,31 +47,31 @@ docker start mysql-todo
 1. Öffne das Projekt in **JetBrains Rider**
 2. Warte bis Rider alle NuGet-Pakete automatisch heruntergeladen und wiederhergestellt hat
 3. Klicke auf den **grünen Play-Button** ▶ oben rechts
-4. Wähle `TODOApp` aus der Run-Konfiguration
+4. Wähle `SOSApp` aus der Run-Konfiguration
 5. Die Anwendung startet automatisch
 
 #### Option B: Über PowerShell/Terminal
 1. Öffne ein PowerShell/Terminal im Projekt-Verzeichnis
 2. Stelle sicher, dass alle NuGet-Pakete heruntergeladen sind:
    ```powershell
-   dotnet restore "TODO App.sln"
+   dotnet restore "SOS App.sln"
    ```
 3. Baue die Lösung:
    ```powershell
-   dotnet build "TODO App.sln"
+   dotnet build "SOS App.sln"
    ```
 4. Starte die Anwendung:
    ```powershell
-   dotnet run --project TODOApp/TODOApp.csproj
+   dotnet run --project SOSApp/SOSApp.csproj
    ```
 
 ## Konfiguration
 
-Die Datenbankverbindung ist in `TODOApp.Business/Business/SessionFactory.cs` konfiguriert:
+Die Datenbankverbindung ist in `SOSApp.Business/Business/SessionFactory.cs` konfiguriert:
 
 - **Server:** localhost
 - **Port:** 3307
-- **Database:** todo
+- **Database:** sos
 - **User:** root
 - **Password:** Test
 
@@ -98,15 +98,15 @@ docker ps
 
 ### Container-Logs anschauen
 ```powershell
-docker logs mysql-todo
+docker logs mysql-sos
 ```
 
 ### Container stoppen
 ```powershell
-docker stop mysql-todo
+docker stop mysql-sos
 ```
 
 ### Container entfernen (um neu zu starten)
 ```powershell
-docker rm mysql-todo
+docker rm mysql-sos
 ```" 

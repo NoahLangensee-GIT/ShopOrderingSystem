@@ -17,8 +17,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TODOApp.Business\TODOApp.Business.csproj" />
-      <ProjectReference Include="..\TODOApp.UI\TODOApp.UI.csproj" />
+      <ProjectReference Include="..\SOSApp.Business\SOSApp.Business.csproj" />
+      <ProjectReference Include="..\SOSApp.UI\SOSApp.UI.csproj" />
     </ItemGroup>
 
 </Project>
