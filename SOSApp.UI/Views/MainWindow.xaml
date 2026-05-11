@@ -20,14 +20,15 @@
                                        Foreground="#2F3640" 
                                        Margin="0,0,0,15" />
                             
-                            <ItemsControl ItemsSource="{Binding Products}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                
-                                <ItemsControl.ItemTemplate>
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <ItemsControl ItemsSource="{Binding Products}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    
+                                    <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border Width="200" Height="200" 
                                                 Background="White" 
@@ -55,8 +56,9 @@
                                             </StackPanel>
                                         </Border>
                                     </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
                             
                         </StackPanel>
                     </DataTemplate>
