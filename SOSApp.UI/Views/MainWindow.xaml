@@ -7,63 +7,307 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels1:MainWindowViewModel}"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="910" Width="1300">
+        Title="Shop" Height="910" Width="1300">
+
     <Grid Background="#F5F6FA">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="20">
+            <TextBlock Text="Shop"
+                       FontSize="34"
+                       FontWeight="Bold"
+                       Foreground="#2F3640"
+                       DockPanel.Dock="Left" />
+
+            <Button Content="Warenkorb öffnen"
+                    Command="{Binding OpenCartCommand}"
+                    Width="180"
+                    Height="40"
+                    Background="#273C75"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    DockPanel.Dock="Right" />
+
+            <TextBlock Text="{Binding StatusMessage}"
+                       FontSize="16"
+                       Foreground="#44BD32"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="30,0,30,0" />
+        </DockPanel>
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      Padding="20">
             <ItemsControl ItemsSource="{Binding CategoryGroups}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="0,0,0,40">
-                            <TextBlock Text="{Binding CategoryName}" 
-                                       FontSize="28" 
-                                       FontWeight="Bold" 
-                                       Foreground="#2F3640" 
+                            <TextBlock Text="{Binding CategoryName}"
+                                       FontSize="28"
+                                       FontWeight="Bold"
+                                       Foreground="#2F3640"
                                        Margin="0,0,0,15" />
-                            
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                          VerticalScrollBarVisibility="Disabled">
                                 <ItemsControl ItemsSource="{Binding Products}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <StackPanel Orientation="Horizontal" />
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
-                                    
+
                                     <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Width="200" Height="200" 
-                                                Background="White" 
-                                                CornerRadius="10" 
-                                                Margin="0,0,20,0"
-                                                BorderBrush="#DCDDE1" BorderThickness="1">
-                                            
-                                            <Border.Effect>
-                                                <DropShadowEffect Color="#718093" BlurRadius="10" ShadowDepth="2" Opacity="0.2"/>
-                                            </Border.Effect>
-                                            
-                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                                                <TextBlock Text="{Binding Name}" 
-                                                           FontSize="20" 
-                                                           FontWeight="SemiBold" 
-                                                           TextWrapping="Wrap" 
-                                                           TextAlignment="Center"
-                                                           Margin="0,0,0,20"/>
-                                                
-                                                <TextBlock Text="{Binding Price, StringFormat='CHF {0:N2}'}"
-                                                           FontSize="22" 
-                                                           Foreground="#44BD32" 
-                                                           FontWeight="Bold"
-                                                           TextAlignment="Center"/>
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
+                                        <DataTemplate>
+                                            <Border Width="230"
+                                                    Height="300"
+                                                    Background="White"
+                                                    CornerRadius="10"
+                                                    Margin="0,0,20,0"
+                                                    BorderBrush="#DCDDE1"
+                                                    BorderThickness="1">
+
+                                                <Border.Effect>
+                                                    <DropShadowEffect Color="#718093"
+                                                                      BlurRadius="10"
+                                                                      ShadowDepth="2"
+                                                                      Opacity="0.2" />
+                                                </Border.Effect>
+
+                                                <StackPanel VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Margin="10">
+
+                                                    <TextBlock Text="{Binding Name}"
+                                                               FontSize="20"
+                                                               FontWeight="SemiBold"
+                                                               TextWrapping="Wrap"
+                                                               TextAlignment="Center"
+                                                               Margin="0,0,0,15" />
+
+                                                    <TextBlock Text="{Binding Price, StringFormat='CHF {0:N2}'}"
+                                                               FontSize="22"
+                                                               Foreground="#44BD32"
+                                                               FontWeight="Bold"
+                                                               TextAlignment="Center"
+                                                               Margin="0,0,0,15" />
+
+                                                    <TextBlock Text="Menge:"
+                                                               VerticalAlignment="Center"
+                                                               HorizontalAlignment="Center"
+                                                               Margin="0,0,0,8" />
+
+                                                    <StackPanel Orientation="Horizontal"
+                                                                HorizontalAlignment="Center"
+                                                                Margin="0,0,0,15">
+
+                                                        <Button Content="-"
+                                                                Width="28"
+                                                                Height="28"
+                                                                Command="{Binding DataContext.DecreaseProductQuantityCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                CommandParameter="{Binding}" />
+
+                                                        <TextBlock Text="{Binding Quantity}"
+                                                                   Width="40"
+                                                                   TextAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   FontSize="16"
+                                                                   FontWeight="Bold" />
+
+                                                        <Button Content="+"
+                                                                Width="28"
+                                                                Height="28"
+                                                                Command="{Binding DataContext.IncreaseProductQuantityCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                CommandParameter="{Binding}" />
+                                                    </StackPanel>
+
+                                                    <Button Content="In den Warenkorb"
+                                                            Command="{Binding DataContext.AddToCartCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                            CommandParameter="{Binding}"
+                                                            Width="160"
+                                                            Height="36"
+                                                            Background="#44BD32"
+                                                            Foreground="White"
+                                                            FontWeight="Bold" />
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
-                            
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+
+        <Popup x:Name="CartPopup"
+               IsOpen="{Binding IsCartOpen}"
+               Placement="Center"
+               AllowsTransparency="True"
+               PopupAnimation="Fade">
+            <Border Width="600"
+                    Background="White"
+                    CornerRadius="12"
+                    Padding="25"
+                    BorderBrush="#DCDDE1"
+                    BorderThickness="1">
+
+                <Border.Effect>
+                    <DropShadowEffect Color="#2F3640"
+                                      BlurRadius="20"
+                                      ShadowDepth="4"
+                                      Opacity="0.35" />
+                </Border.Effect>
+
+                <StackPanel>
+                    <DockPanel Margin="0,0,0,20">
+                        <TextBlock Text="Warenkorb"
+                                   FontSize="28"
+                                   FontWeight="Bold"
+                                   Foreground="#2F3640"
+                                   DockPanel.Dock="Left" />
+
+                        <Button Content="X"
+                                Command="{Binding CloseCartCommand}"
+                                Width="35"
+                                Height="35"
+                                FontWeight="Bold"
+                                DockPanel.Dock="Right" />
+                    </DockPanel>
+
+                    <ItemsControl ItemsSource="{Binding CartItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#DCDDE1"
+                                        BorderThickness="0,0,0,1"
+                                        Padding="0,10">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="130" />
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="85" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding Name}"
+                                                   FontSize="16"
+                                                   VerticalAlignment="Center" />
+
+                                        <StackPanel Grid.Column="1"
+                                                    Orientation="Horizontal"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+
+                                            <Button Content="-"
+                                                    Width="28"
+                                                    Height="28"
+                                                    Command="{Binding DataContext.DecreaseCartItemQuantityCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}" />
+
+                                            <TextBlock Text="{Binding Quantity}"
+                                                       Width="40"
+                                                       TextAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="16"
+                                                       FontWeight="Bold" />
+
+                                            <Button Content="+"
+                                                    Width="28"
+                                                    Height="28"
+                                                    Command="{Binding DataContext.IncreaseCartItemQuantityCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}" />
+                                        </StackPanel>
+
+                                        <TextBlock Grid.Column="2"
+                                                   Text="{Binding TotalGrossPrice, StringFormat='CHF {0:N2}'}"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="#44BD32"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Right" />
+
+                                        <Button Grid.Column="3"
+                                                Content="Löschen"
+                                                Command="{Binding DataContext.RemoveFromCartCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                CommandParameter="{Binding}"
+                                                Margin="10,0,0,0" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Separator Margin="0,20,0,20" />
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="Netto:"
+                                   FontSize="16" />
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding TotalNetPrice, StringFormat='CHF {0:N2}'}"
+                                   FontSize="16"
+                                   FontWeight="Bold" />
+
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="MwSt. 8.1%:"
+                                   FontSize="16"
+                                   Margin="0,8,0,0" />
+
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding TotalVatPrice, StringFormat='CHF {0:N2}'}"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Margin="0,8,0,0" />
+
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Text="Brutto:"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Margin="0,12,0,0" />
+
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Text="{Binding TotalGrossPrice, StringFormat='CHF {0:N2}'}"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="#44BD32"
+                                   Margin="0,12,0,0" />
+                    </Grid>
+
+                    <Button Content="Bestellen"
+                            Height="42"
+                            Margin="0,25,0,0"
+                            Background="#273C75"
+                            Foreground="White"
+                            FontSize="16"
+                            FontWeight="Bold" />
+                </StackPanel>
+            </Border>
+        </Popup>
     </Grid>
 </Window>

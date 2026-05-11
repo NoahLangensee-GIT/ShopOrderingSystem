@@ -9,6 +9,8 @@ public class ProductViewModel : INotifyPropertyChanged
     private string _name = null!;
     private decimal _price;
     private ProductCategory _category;
+    private int _quantity = 0;
+
 
     public string Name
     {
@@ -26,6 +28,21 @@ public class ProductViewModel : INotifyPropertyChanged
     {
         get => _category;
         set { _category = value; OnPropertyChanged(); }
+    }
+    
+    public int Quantity
+    {
+        get => _quantity;
+        set
+        {
+            if (value < 0)
+            {
+                value = 0;
+            }
+
+            _quantity = value;
+            OnPropertyChanged();
+        }
     }
 
     public ProductViewModel(string name, decimal price, ProductCategory category)
