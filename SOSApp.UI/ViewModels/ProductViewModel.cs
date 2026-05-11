@@ -6,10 +6,17 @@ namespace SOSApp.ViewModels;
 
 public class ProductViewModel : INotifyPropertyChanged
 {
+    private ProductCategory _category;
     private string _name = null!;
     private decimal _price;
-    private ProductCategory _category;
-    private int _quantity = 0;
+    private int _quantity;
+
+    public ProductViewModel(string name, decimal price, ProductCategory category)
+    {
+        Name = name;
+        Price = price;
+        Category = category;
+    }
 
 
     public string Name
@@ -45,14 +52,8 @@ public class ProductViewModel : INotifyPropertyChanged
         }
     }
 
-    public ProductViewModel(string name, decimal price, ProductCategory category)
-    {
-        Name = name;
-        Price = price;
-        Category = category;
-    }
-
     public event PropertyChangedEventHandler? PropertyChanged;
+
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
