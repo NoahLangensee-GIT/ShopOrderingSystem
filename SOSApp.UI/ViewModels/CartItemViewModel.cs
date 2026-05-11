@@ -7,6 +7,12 @@ public class CartItemViewModel : INotifyPropertyChanged
 {
     private int _quantity;
 
+    public CartItemViewModel(ProductViewModel product, int quantity)
+    {
+        Product = product;
+        Quantity = quantity;
+    }
+
     public ProductViewModel Product { get; }
 
     public string Name => Product.Name;
@@ -32,12 +38,6 @@ public class CartItemViewModel : INotifyPropertyChanged
     public decimal TotalGrossPrice => UnitGrossPrice * Quantity;
 
     public decimal TotalNetPrice => TotalGrossPrice / 1.081m;
-
-    public CartItemViewModel(ProductViewModel product, int quantity)
-    {
-        Product = product;
-        Quantity = quantity;
-    }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
