@@ -126,12 +126,12 @@
                                                                 CommandParameter="{Binding}" />
                                                     </StackPanel>
 
-                                                    <Button Content="In den Warenkorb"
+                                                    <Button Content="{Binding CartButtonText}"
                                                             Command="{Binding DataContext.AddToCartCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                             CommandParameter="{Binding}"
-                                                            Width="160"
+                                                            Width="180"
                                                             Height="36"
-                                                            Background="#44BD32"
+                                                            Background="{Binding CartButtonBackground}"
                                                             Foreground="White"
                                                             FontWeight="Bold" />
                                                 </StackPanel>

@@ -96,15 +96,6 @@ public class MainWindowViewModel : INotifyPropertyChanged
         if (parameter is not ProductViewModel product) return;
 
         product.Quantity++;
-
-        var cartItem = CartItems.FirstOrDefault(item => item.Product == product);
-        if (cartItem is not null)
-        {
-            cartItem.Quantity = product.Quantity;
-            StatusMessage = $"Menge wurde aktualisiert: {product.Name}, Menge {product.Quantity}.";
-        }
-
-        RefreshCartTotals();
     }
 
     private void DecreaseProductQuantity(object parameter)
@@ -114,31 +105,28 @@ public class MainWindowViewModel : INotifyPropertyChanged
         if (product.Quantity <= 0) return;
 
         product.Quantity--;
-
-        var cartItem = CartItems.FirstOrDefault(item => item.Product == product);
-        if (cartItem is not null)
-        {
-            if (product.Quantity == 0)
-            {
-                CartItems.Remove(cartItem);
-                StatusMessage = $"{product.Name} wurde aus dem Warenkorb entfernt.";
-            }
-            else
-            {
-                cartItem.Quantity = product.Quantity;
-                StatusMessage = $"Menge wurde aktualisiert: {product.Name}, Menge {product.Quantity}.";
-            }
-        }
-
-        RefreshCartTotals();
     }
 
     private void AddToCart(object parameter)
     {
         if (parameter is not ProductViewModel product) return;
 
+        var existingItem = CartItems.FirstOrDefault(item => item.Product == product);
+
         if (product.Quantity <= 0)
         {
+            if (existingItem is not null)
+            {
+                CartItems.Remove(existingItem);
+                product.IsInCart = false;
+                product.CartQuantity = 0;
+
+                StatusMessage = $"{product.Name} wurde aus dem Warenkorb entfernt.";
+
+                RefreshCartTotals();
+                return;
+            }
+
             MessageBox.Show(
                 $"Bitte wähle zuerst eine Menge grösser als 0 für {product.Name}.",
                 "Menge fehlt",
@@ -148,20 +136,21 @@ public class MainWindowViewModel : INotifyPropertyChanged
             return;
         }
 
-        var existingItem = CartItems.FirstOrDefault(item => item.Product == product);
-
         if (existingItem is null)
         {
             var cartItem = new CartItemViewModel(product, product.Quantity);
             cartItem.PropertyChanged += (_, _) => RefreshCartTotals();
 
             CartItems.Add(cartItem);
+            product.IsInCart = true;
+            product.CartQuantity = product.Quantity;
 
             StatusMessage = $"{product.Name} wurde dem Warenkorb hinzugefügt.";
         }
         else
         {
             existingItem.Quantity = product.Quantity;
+            product.CartQuantity = product.Quantity;
 
             StatusMessage = $"Warenkorb wurde aktualisiert: {product.Name}, Menge {product.Quantity}.";
         }
@@ -176,6 +165,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
         CartItems.Remove(cartItem);
         cartItem.Product.Quantity = 0;
+        cartItem.Product.CartQuantity = 0;
+        cartItem.Product.IsInCart = false;
 
         StatusMessage = $"{cartItem.Name} wurde aus dem Warenkorb entfernt.";
 
@@ -188,6 +179,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
         cartItem.Quantity++;
         cartItem.Product.Quantity = cartItem.Quantity;
+        cartItem.Product.CartQuantity = cartItem.Quantity;
 
         StatusMessage = $"Menge wurde aktualisiert: {cartItem.Name}, Menge {cartItem.Quantity}.";
 
@@ -202,6 +194,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             cartItem.Quantity--;
             cartItem.Product.Quantity = cartItem.Quantity;
+            cartItem.Product.CartQuantity = cartItem.Quantity;
 
             StatusMessage = $"Menge wurde aktualisiert: {cartItem.Name}, Menge {cartItem.Quantity}.";
         }
@@ -209,6 +202,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             CartItems.Remove(cartItem);
             cartItem.Product.Quantity = 0;
+            cartItem.Product.CartQuantity = 0;
+            cartItem.Product.IsInCart = false;
 
             StatusMessage = $"{cartItem.Name} wurde aus dem Warenkorb entfernt.";
         }
