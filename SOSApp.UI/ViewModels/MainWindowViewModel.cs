@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using SOSApp;
 using SOSApp.Contract;
 
 namespace SOSApp.ViewModels;
@@ -11,12 +10,28 @@ namespace SOSApp.ViewModels;
 public class MainWindowViewModel : INotifyPropertyChanged
 {
     private const decimal VatRate = 0.081m;
-
-    private ObservableCollection<CategoryGroupViewModel> _categoryGroups = new();
     private readonly IHandleSessionDataBase _dataBaseHandler;
     private ObservableCollection<CartItemViewModel> _cartItems = new();
+
+    private ObservableCollection<CategoryGroupViewModel> _categoryGroups = new();
     private bool _isCartOpen;
     private string _statusMessage = string.Empty;
+
+    public MainWindowViewModel(IHandleSessionDataBase dataBaseHandler)
+    {
+        _dataBaseHandler = dataBaseHandler;
+
+        AddToCartCommand = new RelayCommand(AddToCart);
+        OpenCartCommand = new RelayCommand(() => IsCartOpen = true);
+        CloseCartCommand = new RelayCommand(() => IsCartOpen = false);
+        RemoveFromCartCommand = new RelayCommand(RemoveFromCart);
+        IncreaseCartItemQuantityCommand = new RelayCommand(IncreaseCartItemQuantity);
+        DecreaseCartItemQuantityCommand = new RelayCommand(DecreaseCartItemQuantity);
+        IncreaseProductQuantityCommand = new RelayCommand(IncreaseProductQuantity);
+        DecreaseProductQuantityCommand = new RelayCommand(DecreaseProductQuantity);
+
+        LoadProducts();
+    }
 
     public ObservableCollection<CategoryGroupViewModel> CategoryGroups
     {
@@ -27,7 +42,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -37,7 +52,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<CartItemViewModel> CartItems
     {
         get => _cartItems;
@@ -58,7 +73,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     public decimal TotalGrossPrice => CartItems.Sum(item => item.TotalGrossPrice);
 
     public decimal TotalNetPrice => TotalGrossPrice / (1 + VatRate);
@@ -74,26 +89,11 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public ICommand IncreaseProductQuantityCommand { get; }
     public ICommand DecreaseProductQuantityCommand { get; }
 
-    public MainWindowViewModel(IHandleSessionDataBase dataBaseHandler)    {
-        _dataBaseHandler = dataBaseHandler;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-        AddToCartCommand = new RelayCommand(AddToCart);
-        OpenCartCommand = new RelayCommand(() => IsCartOpen = true);
-        CloseCartCommand = new RelayCommand(() => IsCartOpen = false);
-        RemoveFromCartCommand = new RelayCommand(RemoveFromCart);
-        IncreaseCartItemQuantityCommand = new RelayCommand(IncreaseCartItemQuantity);
-        DecreaseCartItemQuantityCommand = new RelayCommand(DecreaseCartItemQuantity);
-        IncreaseProductQuantityCommand = new RelayCommand(IncreaseProductQuantity);
-        DecreaseProductQuantityCommand = new RelayCommand(DecreaseProductQuantity);
-        
-        LoadProducts();
-    }
     private void IncreaseProductQuantity(object parameter)
     {
-        if (parameter is not ProductViewModel product)
-        {
-            return;
-        }
+        if (parameter is not ProductViewModel product) return;
 
         product.Quantity++;
 
@@ -109,15 +109,9 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     private void DecreaseProductQuantity(object parameter)
     {
-        if (parameter is not ProductViewModel product)
-        {
-            return;
-        }
+        if (parameter is not ProductViewModel product) return;
 
-        if (product.Quantity <= 0)
-        {
-            return;
-        }
+        if (product.Quantity <= 0) return;
 
         product.Quantity--;
 
@@ -138,14 +132,11 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
         RefreshCartTotals();
     }
-    
- private void AddToCart(object parameter)
+
+    private void AddToCart(object parameter)
     {
-        if (parameter is not ProductViewModel product)
-        {
-            return;
-        }
-        
+        if (parameter is not ProductViewModel product) return;
+
         if (product.Quantity <= 0)
         {
             MessageBox.Show(
@@ -165,13 +156,13 @@ public class MainWindowViewModel : INotifyPropertyChanged
             cartItem.PropertyChanged += (_, _) => RefreshCartTotals();
 
             CartItems.Add(cartItem);
-            
+
             StatusMessage = $"{product.Name} wurde dem Warenkorb hinzugefügt.";
         }
         else
         {
             existingItem.Quantity = product.Quantity;
-            
+
             StatusMessage = $"Warenkorb wurde aktualisiert: {product.Name}, Menge {product.Quantity}.";
         }
 
@@ -181,10 +172,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     private void RemoveFromCart(object parameter)
     {
-        if (parameter is not CartItemViewModel cartItem)
-        {
-            return;
-        }
+        if (parameter is not CartItemViewModel cartItem) return;
 
         CartItems.Remove(cartItem);
         cartItem.Product.Quantity = 0;
@@ -193,13 +181,10 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
         RefreshCartTotals();
     }
-    
+
     private void IncreaseCartItemQuantity(object parameter)
     {
-        if (parameter is not CartItemViewModel cartItem)
-        {
-            return;
-        }
+        if (parameter is not CartItemViewModel cartItem) return;
 
         cartItem.Quantity++;
         cartItem.Product.Quantity = cartItem.Quantity;
@@ -211,10 +196,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     private void DecreaseCartItemQuantity(object parameter)
     {
-        if (parameter is not CartItemViewModel cartItem)
-        {
-            return;
-        }
+        if (parameter is not CartItemViewModel cartItem) return;
 
         if (cartItem.Quantity > 1)
         {
@@ -244,7 +226,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     private void LoadProducts()
     {
         var productDtos = _dataBaseHandler.GetAllProducts();
-        
+
         var allProducts = productDtos
             .Select(dto => new ProductViewModel(dto.Name, dto.Price, dto.Category))
             .ToList();
@@ -260,7 +242,6 @@ public class MainWindowViewModel : INotifyPropertyChanged
         CategoryGroups = new ObservableCollection<CategoryGroupViewModel>(grouped);
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
