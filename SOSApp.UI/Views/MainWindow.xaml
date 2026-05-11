@@ -48,7 +48,7 @@
                                                            TextAlignment="Center"
                                                            Margin="0,0,0,20"/>
                                                 
-                                                <TextBlock Text="{Binding Price, StringFormat={}{0:C}}" 
+                                                <TextBlock Text="{Binding Price, StringFormat='CHF {0:N2}'}"
                                                            FontSize="22" 
                                                            Foreground="#44BD32" 
                                                            FontWeight="Bold"
