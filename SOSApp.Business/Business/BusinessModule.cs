@@ -9,4 +9,9 @@ public class BusinessModule : Module
     { 
         builder.RegisterType<HandleSessionDataBase>().As<IHandleSessionDataBase>();
     }
+
+    public IHandleSessionDataBase CreateSessionDataHandler()
+    {
+        return new HandleSessionDataBase();
+    }
 }

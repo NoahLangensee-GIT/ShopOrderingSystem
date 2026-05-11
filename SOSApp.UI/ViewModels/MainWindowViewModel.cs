@@ -8,6 +8,7 @@ namespace SOSApp.ViewModels;
 public class MainWindowViewModel : INotifyPropertyChanged
 {
     private ObservableCollection<CategoryGroupViewModel> _categoryGroups = new();
+    private readonly IHandleSessionDataBase _dataBaseHandler;
 
     public ObservableCollection<CategoryGroupViewModel> CategoryGroups
     {
@@ -19,23 +20,18 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
-    public MainWindowViewModel()
+    public MainWindowViewModel(IHandleSessionDataBase dataBaseHandler)
     {
+        _dataBaseHandler = dataBaseHandler;
         LoadProducts();
     }
 
     private void LoadProducts()
     {
-        var allProducts = new List<ProductViewModel>
-        {
-            new ProductViewModel("Laptop X", 999.00m, ProductCategory.Elektronik),
-            new ProductViewModel("Smartphone Y", 599.50m, ProductCategory.Elektronik),
-            new ProductViewModel("T-Shirt Basic", 15.99m, ProductCategory.Kleidung),
-            new ProductViewModel("Jeans Slim", 49.95m, ProductCategory.Kleidung),
-            new ProductViewModel("Winterjacke", 120.00m, ProductCategory.Kleidung),
-            new ProductViewModel("Apfel", 0.99m, ProductCategory.Lebensmittel),
-            new ProductViewModel("Brot", 2.49m, ProductCategory.Lebensmittel)
-        };
+        var productDtos = _dataBaseHandler.GetAllProducts();
+        var allProducts = productDtos
+            .Select(dto => new ProductViewModel(dto.Name, dto.Price, dto.Category))
+            .ToList();
 
         var grouped = allProducts
             .GroupBy(p => p.Category)

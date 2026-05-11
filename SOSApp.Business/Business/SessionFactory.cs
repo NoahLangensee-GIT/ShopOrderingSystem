@@ -13,11 +13,11 @@ internal class SessionFactory
                 .ConnectionString("Server=localhost;Port=3307;Database=sos;Uid=root;Pwd=Test;")
                 .ShowSql())
             .Mappings(configuration => configuration.FluentMappings
-                .AddFromAssemblyOf<TaskEntity>()
+                .AddFromAssemblyOf<ProductEntity>()
                 )
             .ExposeConfiguration(cfg => cfg.SetProperty(NHibernate.Cfg.Environment.Hbm2ddlAuto, "update"))
             .BuildSessionFactory();
-    
+
         return sessionFactory.OpenSession();
     }
 }
