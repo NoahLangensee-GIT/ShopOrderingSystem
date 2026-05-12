@@ -22,21 +22,21 @@
                        Foreground="#2F3640"
                        DockPanel.Dock="Left" />
 
-            <Button Command="{Binding OpenCartCommand}" 
-                    Width="180" Height="40" 
-                    Background="#273C75" Foreground="White" 
+            <Button Command="{Binding OpenCartCommand}"
+                    Width="180" Height="40"
+                    Background="#273C75" Foreground="White"
                     FontWeight="Bold" DockPanel.Dock="Right">
                 <StackPanel Orientation="Horizontal">
                     <!-- Warenkorb Icon (Segoe MDL2 Assets) -->
-                    <TextBlock Text="&#xE7BF;" 
-                               FontFamily="Segoe MDL2 Assets" 
+                    <TextBlock Text="&#xE7BF;"
+                               FontFamily="Segoe MDL2 Assets"
                                FontSize="16"
-                               VerticalAlignment="Center" 
-                               Margin="0,0,10,0"/>
-        
+                               VerticalAlignment="Center"
+                               Margin="0,0,10,0" />
+
                     <!-- Dein Button Text -->
-                    <TextBlock Text="Warenkorb öffnen" 
-                               VerticalAlignment="Center"/>
+                    <TextBlock Text="Warenkorb öffnen"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
 
@@ -196,8 +196,8 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        
-                        <TextBlock Grid.Column="0" 
+
+                        <TextBlock Grid.Column="0"
                                    Text="Warenkorb"
                                    FontSize="28"
                                    FontWeight="Bold"
@@ -300,7 +300,8 @@
                                    Grid.Column="1"
                                    Text="{Binding TotalNetPrice, StringFormat='CHF {0:N2}'}"
                                    FontSize="16"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Right" />
 
                         <TextBlock Grid.Row="1"
                                    Grid.Column="0"
@@ -313,7 +314,8 @@
                                    Text="{Binding TotalVatPrice, StringFormat='CHF {0:N2}'}"
                                    FontSize="16"
                                    FontWeight="Bold"
-                                   Margin="0,8,0,0" />
+                                   Margin="0,8,0,0"
+                                   HorizontalAlignment="Right" />
 
                         <TextBlock Grid.Row="2"
                                    Grid.Column="0"
@@ -328,16 +330,17 @@
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="#44BD32"
-                                   Margin="0,12,0,0" />
+                                   Margin="0,12,0,0"
+                                   HorizontalAlignment="Right" />
                     </Grid>
 
-                    <TextBlock Text="E-Mail für Rechnung:" 
-                                FontSize="14" 
-                                Margin="0,15,0,5" />
-                    <TextBox Text="{Binding UserEmail, UpdateSourceTrigger=PropertyChanged}" 
-                                Height="30" 
-                                VerticalContentAlignment="Center"
-                                Margin="0,0,0,10"/>
+                    <TextBlock Text="E-Mail für Rechnung:"
+                               FontSize="14"
+                               Margin="0,15,0,5" />
+                    <TextBox Text="{Binding UserEmail, UpdateSourceTrigger=PropertyChanged}"
+                             Height="30"
+                             VerticalContentAlignment="Center"
+                             Margin="0,0,0,10" />
 
                     <Button Content="Bestellen"
                             Command="{Binding PlaceOrderCommand}"
