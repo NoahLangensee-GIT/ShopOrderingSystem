@@ -147,6 +147,7 @@
         </ScrollViewer>
 
         <Popup x:Name="CartPopup"
+               Grid.Row="1"
                IsOpen="{Binding IsCartOpen}"
                Placement="Center"
                AllowsTransparency="True"
@@ -166,20 +167,27 @@
                 </Border.Effect>
 
                 <StackPanel>
-                    <DockPanel Margin="0,0,0,20">
-                        <TextBlock Text="Warenkorb"
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" 
+                                   Text="Warenkorb"
                                    FontSize="28"
                                    FontWeight="Bold"
                                    Foreground="#2F3640"
-                                   DockPanel.Dock="Left" />
+                                   VerticalAlignment="Center" />
 
-                        <Button Content="X"
+                        <Button Grid.Column="1"
+                                Content="X"
                                 Command="{Binding CloseCartCommand}"
                                 Width="35"
                                 Height="35"
                                 FontWeight="Bold"
-                                DockPanel.Dock="Right" />
-                    </DockPanel>
+                                HorizontalAlignment="Right" />
+                    </Grid>
 
                     <ItemsControl ItemsSource="{Binding CartItems}">
                         <ItemsControl.ItemTemplate>
