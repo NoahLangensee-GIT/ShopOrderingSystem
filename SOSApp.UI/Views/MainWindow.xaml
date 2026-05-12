@@ -22,14 +22,23 @@
                        Foreground="#2F3640"
                        DockPanel.Dock="Left" />
 
-            <Button Content="Warenkorb öffnen"
-                    Command="{Binding OpenCartCommand}"
-                    Width="180"
-                    Height="40"
-                    Background="#273C75"
-                    Foreground="White"
-                    FontWeight="Bold"
-                    DockPanel.Dock="Right" />
+            <Button Command="{Binding OpenCartCommand}" 
+                    Width="180" Height="40" 
+                    Background="#273C75" Foreground="White" 
+                    FontWeight="Bold" DockPanel.Dock="Right">
+                <StackPanel Orientation="Horizontal">
+                    <!-- Warenkorb Icon (Segoe MDL2 Assets) -->
+                    <TextBlock Text="&#xE7BF;" 
+                               FontFamily="Segoe MDL2 Assets" 
+                               FontSize="16"
+                               VerticalAlignment="Center" 
+                               Margin="0,0,10,0"/>
+        
+                    <!-- Dein Button Text -->
+                    <TextBlock Text="Warenkorb öffnen" 
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
 
             <TextBlock Text="{Binding StatusMessage}"
                        FontSize="16"
